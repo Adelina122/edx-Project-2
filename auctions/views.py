@@ -70,3 +70,6 @@ def categories(request):
 
 def watchlist(request):
     return render(request, "auctions/watchlist.html")
+
+def create(request):
+    return render(request, "auctions/create.html")
