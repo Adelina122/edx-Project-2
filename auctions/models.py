@@ -7,15 +7,13 @@ class User(AbstractUser):
 
 class Bids(models.Model):
     start_bid = models.IntegerField()
+    step = models.IntegerField(default=1)
 
     def __str__(self):
         return f"Start: {self.start_bid}"
+    
 
-class Listing(models.Model):
-    title = models.CharField(max_length=128)
-    description = models.CharField(max_length=1024)
-    start_bid = models.ForeignKey(Bids, on_delete=models.CASCADE, related_name="bids")
-
+class Category(models.Model):
     FASHION = "FN"
     TOYS = "TY"
     ELECTRONICS = "EL"
@@ -30,6 +28,15 @@ class Listing(models.Model):
         (SPORT, 'Sport'),
     ]
     category = models.CharField(max_length=2, choices=CATEGORY_CHOICES, default=FASHION)
+
+    def __str__(self):
+        return self.category
+
+class Listing(models.Model):
+    title = models.CharField(max_length=128)
+    description = models.CharField(max_length=1024)
+    start_bid = models.ForeignKey(Bids, on_delete=models.CASCADE, related_name="bids")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     photo = models.URLField()
 
     def __str__(self):
