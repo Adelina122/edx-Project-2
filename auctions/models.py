@@ -13,11 +13,26 @@ class Bids(models.Model):
         return f"Start: {self.start_bid}"
     
 
-# class Category(models.Model):
-#     category = models.CharField(max_length=64)
+CATEGORIES = [
+        ('Appliances', 'Appliances'),
+        ('Tech', 'Tech'), 
+        ('Gaming', 'Gaming'), 
+        ('Fashion', 'Fashion'), 
+        ('Sports and Fitness','Sports and Fitness'), 
+        ('Other','Other'),
+        ("Hygiene and Medicine","Hygiene and Medicine"), 
+        ("Stationery","Stationery"),
+        ('Decor', 'Decor'), 
+        ('Furniture','Furniture'), 
+        ('Cars and Mechanical Things','Cars and Mechanical Things'), 
+        ("Tools","Tools")
+    ]
 
-#     def __str__(self):
-#         return self.category
+class Category(models.Model):
+    name = models.CharField(max_length=64)
+
+    def __str__(self):
+        return self.name
 
 class Listing(models.Model):
     # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="auctions")
@@ -25,7 +40,8 @@ class Listing(models.Model):
     description = models.TextField()
     start_bid = models.IntegerField()
     # category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="active_listings")
-    category = models.CharField(max_length=64)
+    category = models.CharField(choices=CATEGORIES, max_length=35, null=True, blank=True)
+    # category = models.CharField(max_length=64)
     image = models.URLField()
 
     def __str__(self):

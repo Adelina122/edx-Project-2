@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .forms import *
-from .models import *
+from .models import User, Category, Listing
 
 
 def index(request):
