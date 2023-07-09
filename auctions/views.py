@@ -4,7 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Listing, Bids, Comments, Category
+from .forms import *
+from .models import *
 
 
 def index(request):
@@ -72,4 +73,14 @@ def watchlist(request):
     return render(request, "auctions/watchlist.html")
 
 def create(request):
-    return render(request, "auctions/create.html")
+    if request.method == "POST":
+        form = ListingForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            description = form.cleaned.data['description']
+            start_bid = form.cleaned_data['start_bid']
+            category = form.cleaned_data['category']
+            image = form.cleaned_data['image']
+            return HttpResponseRedirect(reverse("auctions/create.html"), {
+                "form": form
+            })
