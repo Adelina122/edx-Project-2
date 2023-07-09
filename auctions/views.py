@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .forms import *
@@ -73,14 +73,19 @@ def watchlist(request):
     return render(request, "auctions/watchlist.html")
 
 def create(request):
+    form = ListingForm(request.POST or None)
     if request.method == "POST":
-        form = ListingForm(request.POST)
         if form.is_valid():
-            title = form.cleaned_data['title']
-            description = form.cleaned.data['description']
-            start_bid = form.cleaned_data['start_bid']
-            category = form.cleaned_data['category']
-            image = form.cleaned_data['image']
-            return HttpResponseRedirect(reverse("auctions/create.html"), {
-                "form": form
-            })
+            item = Listing()
+            item.title = form.cleaned_data['title']
+            item.description = form.cleaned_data['description']
+            item.start_bid = form.cleaned_data['start_bid']
+            item.category = form.cleaned_data['category']
+            item.image = form.cleaned_data['image']
+            item.save()
+            products = Listing.objects.all()
+            return HttpResponseRedirect(reverse("index"))
+    else:
+        return render(request, "auctions/create.html", {
+            "form": form
+        })
