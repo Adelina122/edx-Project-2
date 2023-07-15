@@ -2,21 +2,34 @@
 
 {% block body %}
     <h2>Active Listings</h2>
-    <p>{{ listing }}</p>
+    <!-- <p>{{ listing }}</p> -->
 
+    <div class="wrapper">
     {% for listing in listings %}
-        <p>{{ listing.title }}</p>
+        <!-- <div class="listing-id">ID: {{ listing.id }}</div> -->
+        <div class="listing-info">
+        <div class="listing-title">{{ listing.title }}</div>
         {% if listing.image %}
-            <p>
-                <img src="{{ listing.image }}" alt="photo"></p>
+            <div class="listing-image">
+                <img src="{{ listing.image }}" alt="photo">
+            </div>
             {% endif %}
-            <p>Description:
-                {{ listing.description }}</p>
-            <p>Starting bid:
-                {{ listing.start_bid }}</p>
-            <p>Category:
-                {{ listing.category }}</p>
+
+            <div class="listing-content">
+                Description:
+                {{ listing.description }}
+            </div>
+            <div class="listing-content">Starting bid:
+                {{ listing.start_bid }}
+            </div>
+            <div class="listing-content">Category:
+                {{ listing.category }}</div>
+            </div>
+            <div class="listing-content">
+                <a href="{% url 'viewlisting' %}">View</a>
+            </div>
             {% empty %}
-            <h5>No Active Listings</h5>
+            <div class="empty">No Active Listings</div>
         {% endfor %}
+    </div>
     {% endblock %}

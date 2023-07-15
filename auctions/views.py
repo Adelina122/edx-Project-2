@@ -3,6 +3,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 from .forms import *
 from .models import User, Category, Listing
@@ -71,9 +72,11 @@ def categories(request):
         "categories": categories
     })
 
+@login_required(login_url='/login')
 def watchlist(request):
     return render(request, "auctions/watchlist.html")
 
+@login_required(login_url='/login')
 def create(request):
     form = ListingForm(request.POST or None)
     if request.method == "POST":
