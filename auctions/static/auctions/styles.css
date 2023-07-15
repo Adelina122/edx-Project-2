@@ -18,15 +18,29 @@ img{
 .listing-info{
     border: 1px solid grey;
     box-shadow: #e6e6e6;
-    
+    margin: 8px;
 }
 
 .listing-title {
+    text-align: center;
     margin-top: 20px;
     padding: 10px 0 15px;
     font-size: 20px;
-    font-weight: 600px;
+    font-weight: 600;
     font-family: 'Syne Mono', monospace;
+}
+
+.listing {
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+}
+
+.adjust-listing{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 40px;
 }
 
 .empty{

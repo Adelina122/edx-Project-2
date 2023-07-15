@@ -95,3 +95,6 @@ def create(request):
         return render(request, "auctions/create.html", {
             "form": form
         })
+
+def viewlisting(request, listing_id):
+    return render(request, "auctions/viewlisting.html")

@@ -1,0 +1,33 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+    <!-- <p>{{ listing }}</p> -->
+
+    <div class="wrapper">
+    {% for listing in listings %}
+        <!-- <div class="listing-id">ID: {{ listing.id }}</div> -->
+        <div class="listing-info">
+        <div class="listing-title">{{ listing.title }}</div>
+        {% if listing.image %}
+            <div class="listing-image">
+                <img src="{{ listing.image }}" alt="photo">
+            </div>
+            {% endif %}
+
+            <div class="listing-content">
+                Description:
+                {{ listing.description }}
+            </div>
+            <div class="listing-content">Price:
+                {{ listing.start_bid }}$
+            </div>
+            <div class="listing-content">Category:
+                {{ listing.category }}</div>
+            </div>
+            
+            {% empty %}
+            <div class="empty">No Active Listings</div>
+        {% endfor %}
+    </div>
+    {% endblock %}
