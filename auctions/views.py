@@ -9,7 +9,9 @@ from .models import User, Category, Listing
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    return render(request, "auctions/index.html", {
+        'listings': Listing.objects.all()
+    })
 
 
 def login_view(request):
@@ -81,10 +83,11 @@ def create(request):
             item.description = form.cleaned_data['description']
             item.start_bid = form.cleaned_data['start_bid']
             item.category = form.cleaned_data['category']
-            item.image = form.cleaned_data['image']
+            if(item.image is not None):
+                item.image = form.cleaned_data['image']
             item.save()
-            products = Listing.objects.all()
-            return HttpResponseRedirect(reverse("index"))
+            listing = Listing.objects.all()
+            return redirect("index")
     else:
         return render(request, "auctions/create.html", {
             "form": form
