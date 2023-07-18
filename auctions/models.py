@@ -29,8 +29,9 @@ CATEGORIES = [
     ]
 
 class Category(models.Model):
-    name = models.CharField(max_length=64)
-
+    # name = models.CharField(max_length=64)
+    name = models.CharField(choices=CATEGORIES, max_length=35, null=True, blank=True)
+    
     def __str__(self):
         return self.name
 
