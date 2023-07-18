@@ -10,20 +10,20 @@ CATEGORIES = [
         ('Tech', 'Tech'), 
         ('Gaming', 'Gaming'), 
         ('Fashion', 'Fashion'), 
-        ('Sports and Fitness','Sports and Fitness'), 
-        ('Other','Other'),
-        ("Hygiene and Medicine","Hygiene and Medicine"), 
-        ("Stationery","Stationery"),
-        ('Decor', 'Decor'), 
-        ('Furniture','Furniture'), 
-        ('Cars and Mechanical Things','Cars and Mechanical Things'), 
+        # ('Sports and Fitness','Sports and Fitness'), 
+        # ('Other','Other'),
+        # ("Hygiene and Medicine","Hygiene and Medicine"), 
+        # ("Stationery","Stationery"),
+        # ('Decor', 'Decor'), 
+        # ('Furniture','Furniture'), 
+        # ('Cars and Mechanical Things','Cars and Mechanical Things'), 
         ("Tools","Tools")
     ]
 
 class Category(models.Model):
     # id = models.IntegerField(auto_created=True)
     # name = models.CharField(max_length=64)
-    name = models.CharField(choices=CATEGORIES, max_length=35, null=True, blank=True)
+    name = models.CharField(max_length=35, null=True, blank=True)
 
 
     def __str__(self):

@@ -6,6 +6,11 @@
 <form action="{% url 'create' %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
+    <select name="category">
+        {% for category in categories %}
+            <option value="{{ category.id }}">{{ category }}</option>
+        {% endfor %}
+    </select>
     <input type="submit" name="submit" value="Submit">
 </form>
 

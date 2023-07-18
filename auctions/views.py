@@ -79,21 +79,24 @@ def watchlist(request):
 @login_required(login_url='/login')
 def create(request):
     form = ListingForm(request.POST or None)
+    categories = Category.objects.all()
     if request.method == "POST":
         if form.is_valid():
             item = Listing()
             item.title = form.cleaned_data['title']
             item.description = form.cleaned_data['description']
             item.start_bid = form.cleaned_data['start_bid']
-            item.category = form.cleaned_data['category']
+            item.category = Category.objects.get(pk=int(request.POST["category"]))
             if(item.image is not None):
                 item.image = form.cleaned_data['image']
             item.save()
             listing = Listing.objects.all()
+
             return redirect("index")
     else:
         return render(request, "auctions/create.html", {
-            "form": form
+            "form": form, 
+            "categories": categories,
         })
 
 def viewlisting(request, listing_id):
