@@ -7,7 +7,7 @@
     {% for category in categories %}
         <li>
             <a href="{% url 'categories' %}">
-            {{ categories }} </li></a>
+            {{ categories.name }} </li></a>
     {% endfor %}
 </ul>
 

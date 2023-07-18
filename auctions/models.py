@@ -4,15 +4,7 @@ from django.db import models
 
 class User(AbstractUser):
     pass
-
-class Bids(models.Model):
-    start_bid = models.IntegerField()
-    step = models.IntegerField(default=1)
-
-    def __str__(self):
-        return f"Start: {self.start_bid}"
     
-
 CATEGORIES = [
         ('Appliances', 'Appliances'),
         ('Tech', 'Tech'), 
@@ -29,29 +21,49 @@ CATEGORIES = [
     ]
 
 class Category(models.Model):
+    # id = models.IntegerField(auto_created=True)
     # name = models.CharField(max_length=64)
     name = models.CharField(choices=CATEGORIES, max_length=35, null=True, blank=True)
-    
+
+
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
 class Listing(models.Model):
     # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="auctions")
     title = models.CharField(max_length=128)
     description = models.TextField()
     start_bid = models.IntegerField()
-    # category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="active_listings")
-    category = models.CharField(choices=CATEGORIES, max_length=35, null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="active_listings")
+    # category = models.CharField(choices=CATEGORIES, max_length=35, null=True, blank=True)
+    # category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='category_for_the_auction', default='Tech')
     # category = models.CharField(max_length=64)
     image = models.URLField()
 
     def __str__(self):
         return f"{self.id}: {self.title}"
 
-class Comments(models.Model):
+class Bid(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="auctioner")
+    start_bid = models.IntegerField()
+    auction = models.ForeignKey(Listing, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Start: {self.start_bid}"
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_comments")
     listings = models.ForeignKey(Listing, on_delete=models.CASCADE)
     comment = models.ManyToManyField(Listing, blank=True, related_name="listing")
 
     def __str__(self):
         return f"{self.listings}: {self.comment}"
+
+class WatchList(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_watchlist")
+    auctions = models.ManyToManyField(Listing, related_name="auctions_in_watchlist", blank=True)
+
+    def __str__(self):
+        return f"WatchList for {self.user}"
+
 
